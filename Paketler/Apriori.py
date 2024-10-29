@@ -41,8 +41,8 @@ def KuralYarat_KısaYol():
 
     KuralYarat_Kaydet(kurallarCSV,SıkFilmlerAğacıOluştur(değerlendirmeler))
 
-def KuralFiltreleriOluştur(kurallar):
-    kurallar = kurallar[(kurallar['leverage'] > 0.05) & (kurallar['zhangs_metric'] > 0.5)]
+def KuralFiltreleriOluştur(kurallar, zhangs):
     kurallar["consequents_len"] = kurallar["consequents"].apply(lambda x: len(x))
-    kurallar = kurallar[(kurallar['consequents_len'] == 1)].sort_values('lift').tail(20)
+    kurallar = kurallar[(kurallar['consequents_len'] == 1) & (kurallar['zhangs_metric'] > zhangs)
+    ].sort_values(by='lift',ascending=False).head(10)
     return kurallar
