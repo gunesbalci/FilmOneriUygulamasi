@@ -1,8 +1,7 @@
 import pandas as pd
+import Paketler.Dosyalar as dosya
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori, association_rules, fpgrowth
-
-kurallarCSV = "C:/Users/gunes/Desktop/odevprogramlama/yazılımgeliştirme/filmönermeuygulaması/HazırVeriler/kurallar.csv"
 
 def FrozenSettenSeriye(data):
     data = data.replace("frozenset({","")
@@ -36,10 +35,9 @@ def KurallarıOku(dosyaYolu):
     return kurallar
 
 def KuralYarat_KısaYol():
-    değerlendirmelerCSV = "C:/Users/gunes/Desktop/odevprogramlama/yazılımgeliştirme/filmönermeuygulaması/HazırVeriler/değerlendirmeler.csv"
-    değerlendirmeler = pd.read_csv(değerlendirmelerCSV, usecols=["userId","movieId"])
+    değerlendirmeler = pd.read_csv(dosya.değerlendirmelerCSV, usecols=["userId","movieId"])
 
-    KuralYarat_Kaydet(kurallarCSV,SıkFilmlerAğacıOluştur(değerlendirmeler))
+    KuralYarat_Kaydet(dosya.kurallarCSV,SıkFilmlerAğacıOluştur(değerlendirmeler))
 
 def KuralFiltreleriOluştur(kurallar, zhangs):
     kurallar["consequents_len"] = kurallar["consequents"].apply(lambda x: len(x))
